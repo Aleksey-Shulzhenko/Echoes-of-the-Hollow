@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://bqemb53er5n62"]
+
+[ext_resource type="Script" uid="uid://b7bsgqdh7t6ks" path="res://Collecbles/gold.gd" id="1_v4pyp"]
+[ext_resource type="Texture2D" uid="uid://k6ckxfkx1no8" path="res://oak_woods_v1.0/toppng.com-22-color-coin-sprite-sheet-561x129.png" id="1_xbdix"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2k2o"]
+atlas = ExtResource("1_xbdix")
+region = Rect2(0, 0, 208, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wl56"]
+atlas = ExtResource("1_xbdix")
+region = Rect2(208, 0, 208, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8vuvs"]
+atlas = ExtResource("1_xbdix")
+region = Rect2(416, 0, 208, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jen33"]
+atlas = ExtResource("1_xbdix")
+region = Rect2(624, 0, 208, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3o5y0"]
+atlas = ExtResource("1_xbdix")
+region = Rect2(416, 0, 208, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_huf5t"]
+atlas = ExtResource("1_xbdix")
+region = Rect2(208, 0, 208, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1ostf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2k2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wl56")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8vuvs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jen33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3o5y0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_huf5t")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_okapb"]
+radius = 8.0
+
+[node name="Gold" type="Area2D"]
+script = ExtResource("1_v4pyp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.0729167, 0.0729167)
+sprite_frames = SubResource("SpriteFrames_1ostf")
+animation = &"Idle"
+autoplay = "Idle"
+frame = 2
+frame_progress = 0.217652
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_okapb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
