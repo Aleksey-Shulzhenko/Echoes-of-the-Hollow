@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw8ju063mkxx8"]
+
+[ext_resource type="Script" uid="uid://c56r7eu8ati3k" path="res://menu.gd" id="1_k18yu"]
+[ext_resource type="PackedScene" uid="uid://cja0i5e4odwag" path="res://bg.tscn" id="2_h40is"]
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_k18yu")
+
+[node name="Play" type="Button" parent="."]
+offset_left = 395.0
+offset_top = 116.0
+offset_right = 789.0
+offset_bottom = 232.0
+theme_override_font_sizes/font_size = 50
+text = "Play"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 394.0
+offset_top = 393.0
+offset_right = 788.0
+offset_bottom = 509.0
+theme_override_font_sizes/font_size = 50
+text = "Quit"
+
+[node name="BG" parent="." instance=ExtResource("2_h40is")]
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
