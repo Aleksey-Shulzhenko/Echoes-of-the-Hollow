@@ -1,1 +1,11 @@
+res://character_body_2d.tscn
+res://character_body_2d.gd
 res://menu.tscn
+res://Build/shop.tscn
+res://Collecbles/gold.tscn
+res://Mods/skeleton.tscn
+res://bg.tscn
+res://level.tscn
+res://Player/player.tscn
+res://signals.gd
+res://Player/player.gd
