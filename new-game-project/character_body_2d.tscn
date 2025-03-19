@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://c4c074on7nv5b"]
+[gd_scene load_steps=46 format=3 uid="uid://c4c074on7nv5b"]
 
 [ext_resource type="Texture2D" uid="uid://cqssmvlvyxe4l" path="res://Monsters_Creatures_Fantasy/Mushroom/Attack.png" id="1_dd465"]
 [ext_resource type="Script" uid="uid://dguyjaxid0x7y" path="res://character_body_2d.gd" id="1_lhvu3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://4sa7ly72xmgv" path="res://Monsters_Creatures_Fantasy/Mushroom/Death.png" id="3_4sjlk"]
 [ext_resource type="Texture2D" uid="uid://n1crdgdt1uao" path="res://Monsters_Creatures_Fantasy/Mushroom/Idle.png" id="4_qp52p"]
 [ext_resource type="Texture2D" uid="uid://ce25clq3wndyp" path="res://Monsters_Creatures_Fantasy/Mushroom/Run.png" id="5_6ct3r"]
+[ext_resource type="PackedScene" uid="uid://dodj8n3k5dtr8" path="res://damage_box.tscn" id="7_4sjlk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1kp85"]
 radius = 14.0
@@ -260,6 +261,18 @@ tracks/1/keys = {
 "update": 1,
 "values": ["Attack"]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackDirection/DamageBox/HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.699986, 0.801735),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_unmcv"]
 length = 0.5
@@ -371,12 +384,28 @@ tracks/1/keys = {
 "values": ["Run"]
 }
 
+[sub_resource type="Animation" id="Animation_4sjlk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackDirection/DamageBox/HitBox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uafw2"]
 _data = {
 &"Attack": SubResource("Animation_ms8fj"),
 &"Damage": SubResource("Animation_unmcv"),
 &"Death": SubResource("Animation_gh552"),
 &"Idle": SubResource("Animation_mbxdm"),
+&"RESET": SubResource("Animation_4sjlk"),
 &"Run": SubResource("Animation_rk7dk")
 }
 
@@ -388,13 +417,14 @@ collision_layer = 4
 script = ExtResource("1_lhvu3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CapsuleShape2D_1kp85")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_mwn6v")
 animation = &"Attack"
-frame = 6
+frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -405,6 +435,7 @@ autoplay = "Idle"
 [node name="AttackDirection" type="Node2D" parent="."]
 
 [node name="AttackRange" type="Area2D" parent="AttackDirection"]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -412,4 +443,20 @@ collision_mask = 2
 position = Vector2(17.5, 1)
 shape = SubResource("RectangleShape2D_lhvu3")
 
+[node name="DamageBox" parent="AttackDirection" instance=ExtResource("7_4sjlk")]
+
+[node name="HurtBox" parent="AttackDirection/DamageBox" index="0"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="HitBox" parent="AttackDirection/DamageBox" index="1"]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="AttackDirection/DamageBox/HitBox" index="0"]
+position = Vector2(17, 0)
+
 [connection signal="body_entered" from="AttackDirection/AttackRange" to="." method="_on_attack_range_body_entered"]
+[connection signal="area_entered" from="AttackDirection/DamageBox/HitBox" to="." method="_on_hit_box_area_entered"]
+
+[editable path="AttackDirection/DamageBox"]

@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://1lmmgjspqcyu" path="res://Build/shop.tscn" id="4_1ainy"]
 [ext_resource type="Texture2D" uid="uid://bw2eign2bk6af" path="res://oak_woods_v1.0/background/background_layer_3.png" id="4_iyqt7"]
 [ext_resource type="Texture2D" uid="uid://w2y07rgiele4" path="res://oak_woods_v1.0/oak_woods_tileset.png" id="5_7oah2"]
+[ext_resource type="Texture2D" uid="uid://dyb0opgdj6y14" path="res://oak_woods_v1.0/oak_woods_v1.0/character/greenbar (1).png" id="7_8cye3"]
 [ext_resource type="Texture2D" uid="uid://djeritrlh7frl" path="res://oak_woods_v1.0/decorations/circle.png" id="8_km5ld"]
 [ext_resource type="PackedScene" uid="uid://c4c074on7nv5b" path="res://character_body_2d.tscn" id="9_i2t4f"]
 
@@ -427,21 +428,6 @@ texture = ExtResource("5_7oah2")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_rtc68")
 
-[sub_resource type="GDScript" id="GDScript_mipjc"]
-script/source = "extends Label
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	text = \"HP: \" + str($\"../../Player/Player\".health)
-	pass
-"
-
 [sub_resource type="GDScript" id="GDScript_348wd"]
 script/source = "extends Label
 
@@ -584,15 +570,6 @@ layer_0/tile_data = PackedInt32Array(2293758, 65536, 0, 2293759, 65536, 0, 22282
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-offset_left = 25.0
-offset_top = 24.0
-offset_right = 216.0
-offset_bottom = 89.0
-theme_override_font_sizes/font_size = 30
-text = "HP"
-script = SubResource("GDScript_mipjc")
-
 [node name="Label2" type="Label" parent="CanvasLayer"]
 offset_left = 26.0
 offset_top = 66.0
@@ -615,6 +592,15 @@ text = "DAY"
 libraries = {
 &"": SubResource("AnimationLibrary_2orkt")
 }
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 12.0
+offset_top = 133.0
+offset_right = 157.0
+offset_bottom = 278.0
+value = 50.0
+nine_patch_stretch = true
+texture_progress = ExtResource("7_8cye3")
 
 [node name="Collectibles" type="Node2D" parent="."]
 script = SubResource("GDScript_tv6fv")
@@ -662,3 +648,4 @@ position = Vector2(249, 530)
 [node name="Mobs" type="Node2D" parent="Player"]
 
 [connection signal="timeout" from="DayNight" to="." method="_on_day_night_timeout"]
+[connection signal="health_changed" from="Player/Player" to="." method="_on_player_health_changed"]

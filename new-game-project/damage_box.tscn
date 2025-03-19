@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dodj8n3k5dtr8"]
+
+[ext_resource type="Script" uid="uid://dmh6tgafbedmf" path="res://collision_shape_2d.gd" id="1_6lnsr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ctout"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6lnsr"]
+radius = 9.0
+
+[node name="DamageBox" type="Node2D"]
+
+[node name="HurtBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_ctout")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(21, 0)
+shape = SubResource("CircleShape2D_6lnsr")
+disabled = true
+script = ExtResource("1_6lnsr")

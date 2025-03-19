@@ -9,3 +9,6 @@ res://level.tscn
 res://Player/player.tscn
 res://signals.gd
 res://Player/player.gd
+res://damage_box.tscn
+res://collision_shape_2d.gd
+res://level.gd
